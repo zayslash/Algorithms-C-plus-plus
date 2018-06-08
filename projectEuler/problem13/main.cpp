@@ -6,12 +6,15 @@
 
 using namespace std;
 
+int get_col(string fileName);
+int get_row(string fileName);
 
-string sumThing(string filename){
-string arraytry[100][50];
+
+string sumThing(string filename, int array_rows, int array_cols){
+string arraytry[array_rows][array_cols];
 string answer;
 
-long long int sum =0;
+int sum =0;
 
 int counter = 0;
 fstream file;
@@ -24,7 +27,7 @@ fstream file;
 
          while(file >> line){
 
-          while (x < 50){
+          while (x < array_cols){
           arraytry[counter][x] = int(line[x]);
           x++;
           }
@@ -36,11 +39,11 @@ fstream file;
 string numberString;
 
 ///Convert to Integers
-int addArray[100][50];
+int addArray[array_rows][array_cols];
 
-for(int i = 0 ; i < 100; i++){
+for(int i = 0 ; i < array_rows; i++){
 
-    for (int u = 0; u < 50 ; u++){
+    for (int u = 0; u < array_cols ; u++){
 
        addArray[i][u] = stoi(arraytry[i][u]);
 
@@ -52,9 +55,9 @@ int sumofeach = 0;
 int minus;
 string splitnumber;
 
-for (int u = 49; u >= 0; u--){
+for (int u = array_cols - 1; u >= 0; u--){
 
-    for (int i = 99; i >= 0; i--){
+    for (int i = array_rows - 1; i >= 0; i--){
 
      //cout << addArray[i][49] << " + ";
 
@@ -90,7 +93,7 @@ splitnumber += numberString[p];
 }
 
 sumofeach = stoi(splitnumber);
-splitnumber = "";
+splitnumber = " ";
 
 }
 
@@ -112,8 +115,14 @@ return newanswer;
 
 
 int main() {
-string answer = sumThing("numbers.txt") ;
-cout << sumThing("numbers.txt") << "\n";
+
+
+
+string fileName = "numbers.txt";
+
+
+string answer = sumThing(fileName,get_row(fileName),get_col(fileName)) ;
+cout << sumThing(fileName,get_row(fileName),get_col(fileName)) << "\n";
 
 cout << "\nThe first 10 numbers are: " ;
 
@@ -127,7 +136,62 @@ for (int i = 0 ; i <= answer.length() ; i++){
        }
 }
 
-cout << "\n";
 
+
+}
+
+
+
+
+int get_col(string fileName){
+
+   ifstream File;
+   File.open(fileName);
+   char x;
+   int count = 0;
+   int count_col =0 ;
+
+   string Line;
+
+
+   if(File.is_open()){
+
+     while (getline(File, Line)  && count != 1){
+            count++;
+
+           while(count_col < Line.length()){
+
+             count_col++;
+           }
+     }
+   }
+
+
+return count_col;
+
+}
+
+
+int get_row(string fileName){
+
+   ifstream File;
+   File.open(fileName);
+   char x;
+   int count = 0;
+
+
+   string Line;
+
+
+   if(File.is_open()){
+
+     while (getline(File, Line) ){
+            count++;
+
+     }
+   }
+
+
+return count;
 
 }
